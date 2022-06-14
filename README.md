@@ -41,10 +41,14 @@ fun App() {
     ) { destination ->
         when (destination) {
             is AppDestination.Home -> {
-                Home()
+                Home(onSettingsClick = {
+                    navigator.replace(AppDestination.Settings)
+                })
             }
             is AppDestination.Settings -> {
-                Settings()
+                Settings(onBackClick = {
+                    navigator.replace(AppDestination.Home)
+                })
             }
         }
     }
