@@ -6,6 +6,9 @@ plugins {
 
 val composeVersion = "1.2.0-beta03"
 
+group = "com.github.xinto"
+version = "1.0.0"
+
 android {
     compileSdk = 32
 
@@ -41,9 +44,9 @@ afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 from(components.getByName("release"))
-                groupId = "com.github.xinto"
+                groupId = project.group as String
                 artifactId = "taxi"
-                version = "1.0.0"
+                version = project.version as String
             }
         }
     }
