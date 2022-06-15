@@ -10,7 +10,7 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.xinto.taxiapp"
+        applicationId = "com.xinto.taxi.demo"
         minSdk = 21
         targetSdk = 32
         versionCode = 1

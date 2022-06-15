@@ -1,9 +1,13 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    `maven-publish`
 }
 
 val composeVersion = "1.2.0-beta03"
+
+group = "com.github.xinto"
+version = "1.0.0"
 
 android {
     compileSdk = 32
@@ -32,6 +36,19 @@ android {
         freeCompilerArgs = freeCompilerArgs +
                 "-Xexplicit-api=strict" +
                 "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components.getByName("release"))
+                groupId = project.group as String
+                artifactId = "taxi"
+                version = project.version as String
+            }
+        }
     }
 }
 

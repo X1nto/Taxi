@@ -1,4 +1,4 @@
-package com.xinto.taxi.ui.theme
+package com.xinto.taxi.demo.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

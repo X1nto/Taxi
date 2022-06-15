@@ -1,4 +1,4 @@
-package com.xinto.taxi.ui
+package com.xinto.taxi.demo.ui
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi

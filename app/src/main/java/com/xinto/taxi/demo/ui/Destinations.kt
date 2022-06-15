@@ -1,4 +1,4 @@
-package com.xinto.taxi.ui
+package com.xinto.taxi.demo.ui
 
 import com.xinto.taxi.Destination
 import kotlinx.parcelize.Parcelize

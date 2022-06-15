@@ -1,4 +1,4 @@
-package com.xinto.taxi.ui.theme
+package com.xinto.taxi.demo.ui.theme
 
 import android.app.Activity
 import android.os.Build
