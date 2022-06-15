@@ -1,4 +1,4 @@
-package com.xinto.taxi
+package com.xinto.taxi.demo
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,10 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import com.xinto.taxi.ui.BackstackScreen
-import com.xinto.taxi.ui.RegularScreen
-import com.xinto.taxi.ui.theme.TaxiTheme
-import com.xinto.taxi.ui.widget.ListItem
+import com.xinto.taxi.Destination
+import com.xinto.taxi.Taxi
+import com.xinto.taxi.demo.ui.BackstackScreen
+import com.xinto.taxi.demo.ui.RegularScreen
+import com.xinto.taxi.demo.ui.theme.TaxiTheme
+import com.xinto.taxi.demo.ui.widget.ListItem
+import com.xinto.taxi.rememberNavigator
 import kotlinx.parcelize.Parcelize
 
 sealed interface SampleDestination : Destination {

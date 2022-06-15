@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    `maven-publish`
 }
 
 val composeVersion = "1.2.0-beta03"
@@ -32,6 +33,17 @@ android {
         freeCompilerArgs = freeCompilerArgs +
                 "-Xexplicit-api=strict" +
                 "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("Maven") {
+            groupId = "com.xinto"
+            artifactId = "taxi"
+            version = "1.0.0"
+            artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+        }
     }
 }
 
