@@ -1,4 +1,4 @@
-package com.xinto.taxi.ui.widget
+package com.xinto.taxi.demo.ui.widget
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
