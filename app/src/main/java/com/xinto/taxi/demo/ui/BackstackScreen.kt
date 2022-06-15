@@ -1,9 +1,6 @@
 package com.xinto.taxi.demo.ui
 
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.with
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -60,19 +57,17 @@ fun BackstackScreen() {
                 if (targetState.index > initialState.index) {
                     slideIntoContainer(
                         towards = AnimatedContentScope.SlideDirection.Start,
-                        initialOffset = { it / 3 }
-                    ) + fadeIn() with slideOutOfContainer(
+                    ) with slideOutOfContainer(
                         towards = AnimatedContentScope.SlideDirection.Start,
                         targetOffset = { it / 3 }
-                    )
+                    ) + fadeOut()
                 } else {
                     slideIntoContainer(
                         towards = AnimatedContentScope.SlideDirection.End,
-                        initialOffset = { it / 3 }
-                    ) + fadeIn() with slideOutOfContainer(
+                    ) with slideOutOfContainer(
                         towards = AnimatedContentScope.SlideDirection.End,
                         targetOffset = { it / 3 }
-                    )
+                    ) + fadeOut()
                 }
             }
         ) {
