@@ -33,7 +33,14 @@ sealed interface AppDestination : Destination {
 
 @Composable
 fun App() {
-    val navigator = rememberNavigator<AppDestination>(initial = AppDestination.Home)
+    val navigator = rememberBackstackNavigator<AppDestination>(initial = AppDestination.Home)
+    
+    BackHandler {
+        //Check if the backstack is empty
+        if (!navigator.pop()) {
+            finish() //Finish the activity if backstack is empty
+        }
+    }
     
     Taxi(
         navigator = navigator,
@@ -42,12 +49,12 @@ fun App() {
         when (destination) {
             is AppDestination.Home -> {
                 Home(onSettingsClick = {
-                    navigator.replace(AppDestination.Settings)
+                    navigator.push(AppDestination.Settings)
                 })
             }
             is AppDestination.Settings -> {
                 Settings(onBackClick = {
-                    navigator.replace(AppDestination.Home)
+                    navigator.pop()
                 })
             }
         }
