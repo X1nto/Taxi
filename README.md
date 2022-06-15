@@ -32,7 +32,7 @@ sealed interface AppDestination : Destination {
 }
 
 @Composable
-fun App() {
+fun BackstackApp() {
     val navigator = rememberBackstackNavigator<AppDestination>(initial = AppDestination.Home)
     
     BackHandler {
@@ -43,6 +43,7 @@ fun App() {
     }
     
     Taxi(
+        modifier = Modifier.filLMaxSize(),
         navigator = navigator,
         transitionSpec = { fadeIn() with fadeOut() }
     ) { destination ->
@@ -56,6 +57,52 @@ fun App() {
                 Settings(onBackClick = {
                     navigator.pop()
                 })
+            }
+        }
+    }
+}
+
+@Composable
+fun NavbarApp() {
+    val navigator = rememberNavigator<AppDestination>(initial = AppDestination.Home)
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            NavigationBar(modifier = Modifier.fillMaxWidth()) {
+                NavigationBarItem(
+                    selected = navigator.currentDestination is AppDestination.Home,
+                    onClick = { 
+                        navigator.replace(AppDestination.Home)
+                    },
+                    label = {
+                        Text("Home")
+                    }
+                )
+                NavigationBarItem(
+                    selected = navigator.currentDestination is AppDestination.Settings,
+                    onClick = { 
+                        navigator.replace(AppDestination.Settings)
+                    },
+                    label = {
+                        Text("Settings")
+                    }
+                )
+            }
+        }
+    ) { paddingValues ->
+        Taxi(
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            navigator = navigator,
+            transitionSpec = { fadeIn() with fadeOut() }
+        ) { destination ->
+            when (destination) {
+                is AppDestination.Home -> {
+                    Home()
+                }
+                is AppDestination.Settings -> {
+                    Settings()
+                }
             }
         }
     }
