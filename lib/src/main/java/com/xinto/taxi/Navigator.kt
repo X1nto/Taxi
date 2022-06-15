@@ -71,6 +71,8 @@ public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
 
     /**
      * Pop to the previous destination.
+     * @return true if the current destination got removed,
+     * false if the backstack was empty.
      */
     public fun pop(): Boolean {
         return items.removeLastOrNull() != null
