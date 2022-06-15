@@ -36,13 +36,15 @@ android {
     }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("Maven") {
-            groupId = "com.xinto"
-            artifactId = "taxi"
-            version = "1.0.0"
-            artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components.getByName("release"))
+                groupId = "com.github.xinto"
+                artifactId = "taxi"
+                version = "1.0.0"
+            }
         }
     }
 }
