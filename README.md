@@ -36,9 +36,9 @@ fun App() {
     val navigator = rememberBackstackNavigator<AppDestination>(initial = AppDestination.Home)
     
     BackHandler {
-        //Check if the backstack is empty
+        //Check if the navigator can pop
         if (!navigator.pop()) {
-            finish() //Finish the activity if backstack is empty
+            finish() //Finish the activity if the backstack was empty
         }
     }
     
