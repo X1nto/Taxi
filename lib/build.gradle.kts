@@ -37,5 +37,4 @@ android {
 
 dependencies {
     implementation("androidx.compose.foundation:foundation:$composeVersion")
-    implementation("androidx.activity:activity-compose:1.4.0")
 }

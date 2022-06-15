@@ -2,6 +2,7 @@ package com.xinto.taxi
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
@@ -50,6 +51,14 @@ fun MainContent(
 ) {
     val navigator = rememberNavigator<SampleDestination>(initial = SampleDestination.ChooseScreen)
     val topBarBehaviour = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarScrollState())
+
+    BackHandler {
+        if (navigator.currentDestination is SampleDestination.ChooseScreen) {
+            finishActivity()
+        }
+        navigator.replace(SampleDestination.ChooseScreen)
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -65,13 +74,6 @@ fun MainContent(
                 .padding(paddingValues),
             navigator = navigator,
             transitionSpec = { fadeIn() with fadeOut() },
-            backEnabled = true,
-            onBackPress = {
-                if (it is SampleDestination.ChooseScreen) {
-                    finishActivity()
-                }
-                navigator.replace(SampleDestination.ChooseScreen)
-            }
         ) {
             when (it) {
                 is SampleDestination.ChooseScreen -> {
