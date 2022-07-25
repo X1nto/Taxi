@@ -7,7 +7,7 @@ plugins {
 val composeVersion = "1.2.0-beta03"
 
 group = "com.github.xinto"
-version = "1.0.0"
+version = "1.1.0"
 
 android {
     compileSdk = 32
