@@ -78,4 +78,12 @@ public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
         return items.removeLastOrNull() != null
     }
 
+    /**
+     * Replace the last [destination] in the backstack with a new one, completely
+     * destroying it.
+     */
+    public fun replace(destination: T) {
+        items[items.lastIndex] = destination
+    }
+
 }
