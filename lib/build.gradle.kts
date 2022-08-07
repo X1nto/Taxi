@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
 }
 
-val composeVersion = "1.2.0-beta03"
+val composeVersion = "1.2.0"
 
 group = "com.github.xinto"
 version = "1.1.0"
