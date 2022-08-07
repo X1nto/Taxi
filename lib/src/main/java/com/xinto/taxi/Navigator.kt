@@ -75,6 +75,10 @@ public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
      * false if the backstack was empty.
      */
     public fun pop(): Boolean {
+        if (items.size <= 1) {
+            return false
+        }
+
         return items.removeLastOrNull() != null
     }
 
