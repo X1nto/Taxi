@@ -86,29 +86,26 @@ fun BackstackScreen() {
                 .padding(paddingValues),
             navigator = navigator,
             transitionSpec = {
-                when {
-                    targetState is BackstackDestination.Count && initialState is BackstackDestination.Count -> {
-                        val targetState = targetState as BackstackDestination.Count
-                        val initialState = initialState as BackstackDestination.Count
-                        if (targetState.index > initialState.index) {
-                            slideIntoContainer(
-                                towards = AnimatedContentScope.SlideDirection.Start,
-                            ) with slideOutOfContainer(
-                                towards = AnimatedContentScope.SlideDirection.Start,
-                                targetOffset = { it / 3 }
-                            ) + fadeOut()
-                        } else {
-                            slideIntoContainer(
-                                towards = AnimatedContentScope.SlideDirection.End,
-                            ) with slideOutOfContainer(
-                                towards = AnimatedContentScope.SlideDirection.End,
-                                targetOffset = { it / 3 }
-                            ) + fadeOut()
-                        }
+                val targetCountState = targetState as? BackstackDestination.Count
+                val initialCountState = initialState as? BackstackDestination.Count
+                if (targetCountState != null && initialCountState != null) {
+                    if (targetCountState.index > initialCountState.index) {
+                        slideIntoContainer(
+                            towards = AnimatedContentScope.SlideDirection.Start,
+                        ) with slideOutOfContainer(
+                            towards = AnimatedContentScope.SlideDirection.Start,
+                            targetOffset = { it / 3 }
+                        ) + fadeOut()
+                    } else {
+                        slideIntoContainer(
+                            towards = AnimatedContentScope.SlideDirection.End,
+                        ) with slideOutOfContainer(
+                            towards = AnimatedContentScope.SlideDirection.End,
+                            targetOffset = { it / 3 }
+                        ) + fadeOut()
                     }
-                    else -> {
-                        fadeIn() + scaleIn() with fadeOut() + scaleOut()
-                    }
+                } else {
+                    fadeIn() + scaleIn() with fadeOut() + scaleOut()
                 }
             }
         ) {
