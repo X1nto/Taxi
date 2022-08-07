@@ -53,8 +53,7 @@ fun MainContent(
     finishActivity: () -> Unit,
 ) {
     val navigator = rememberNavigator<SampleDestination>(initial = SampleDestination.ChooseScreen)
-    val topBarBehaviour = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarScrollState())
-
+    val topBarBehaviour = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     BackHandler {
         if (navigator.currentDestination is SampleDestination.ChooseScreen) {
             finishActivity()

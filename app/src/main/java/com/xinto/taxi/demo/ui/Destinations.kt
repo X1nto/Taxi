@@ -3,8 +3,14 @@ package com.xinto.taxi.demo.ui
 import com.xinto.taxi.Destination
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class BackstackShowcase(val index: Int) : Destination
+sealed interface BackstackDestination : Destination {
+
+    @Parcelize
+    data class Count(val index: Int) : BackstackDestination
+
+    @Parcelize
+    object Replaced : BackstackDestination
+}
 
 sealed interface RegularDestination : Destination {
 
