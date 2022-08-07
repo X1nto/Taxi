@@ -83,8 +83,10 @@ public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
     }
 
     /**
-     * Replace the last [destination] in the backstack with a new one, completely
+     * Replace the current [destination] in the backstack with a new one, completely
      * destroying it.
+     *
+     * Note: this does not alter the previous destinations.
      */
     public fun replace(destination: T) {
         items[items.lastIndex] = destination
