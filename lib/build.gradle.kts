@@ -4,17 +4,15 @@ plugins {
     `maven-publish`
 }
 
-val composeVersion = "1.2.0"
-
 group = "com.github.xinto"
 version = "1.1.0"
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -28,7 +26,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = composeVersion
+        kotlinCompilerExtensionVersion = "1.3.0"
     }
 
     kotlinOptions {
@@ -53,5 +51,5 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation("androidx.compose.foundation:foundation:$composeVersion")
+    implementation("androidx.compose.foundation:foundation:1.2.1")
 }
