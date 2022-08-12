@@ -26,10 +26,7 @@ import com.xinto.taxi.rememberNavigator
 @Composable
 fun RegularScreen() {
     val navigator = rememberNavigator<RegularDestination>(initial = RegularDestination.ScreenOne)
-    
-    val timeHasCome = remember { "The time has come and so have I" }
     val nero = painterResource(id = R.drawable.nero_has_come)
-    
     Taxi(
         modifier = Modifier.fillMaxSize(),
         navigator = navigator, 
@@ -44,7 +41,7 @@ fun RegularScreen() {
             when (it) {
                 is RegularDestination.ScreenOne -> {
                     ProvideTextStyle(MaterialTheme.typography.headlineSmall) {
-                        Text(timeHasCome)
+                        Text("The time has come and so have I" )
                     }
 
                     Button(

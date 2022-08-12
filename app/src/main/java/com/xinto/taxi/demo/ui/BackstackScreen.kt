@@ -65,7 +65,6 @@ fun BackstackScreen() {
                     if (currentIndex > 0) {
                         IconButton(onClick = {
                             if (navigator.currentDestination is BackstackDestination.Count) {
-                                println("passed")
                                 currentIndex--
                             }
                             navigator.pop()
