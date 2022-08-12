@@ -3,7 +3,9 @@ package com.xinto.taxi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 
 /**
@@ -17,7 +19,11 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 public inline fun <reified T : Destination> rememberNavigator(
     initial: T
 ): RegularNavigator<T> {
-    return remember { RegularNavigator(initial) }
+    return rememberSaveable(
+        saver = RegularNavigator.Saver()
+    ) {
+        RegularNavigator(initial)
+    }
 }
 
 /**
@@ -31,7 +37,11 @@ public inline fun <reified T : Destination> rememberNavigator(
 public inline fun <reified T : Destination> rememberBackstackNavigator(
     initial: T
 ): BackstackNavigator<T> {
-    return remember { BackstackNavigator(initial) }
+    return rememberSaveable(
+        saver = BackstackNavigator.Saver()
+    ) {
+        BackstackNavigator(initial)
+    }
 }
 
 public interface Navigator<T : Destination> {
@@ -53,6 +63,18 @@ public class RegularNavigator<T : Destination>(initial: T) : Navigator<T> {
         item.value = destination
     }
 
+    public companion object {
+        public fun <T : Destination> Saver(): Saver<RegularNavigator<T>, T> {
+            return Saver(
+                save = {
+                    it.item.value
+                },
+                restore = { destination ->
+                    RegularNavigator(destination)
+                }
+            )
+        }
+    }
 }
 
 public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
@@ -92,4 +114,20 @@ public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
         items[items.lastIndex] = destination
     }
 
+    public companion object {
+        public fun <T : Destination> Saver(): Saver<BackstackNavigator<T>, Any> {
+            return listSaver(
+                save = {
+                    it.items.toList()
+                },
+                restore = { destinations ->
+                    val navigator = BackstackNavigator(destinations.first())
+                    for (i in 1 until destinations.size) {
+                        navigator.push(destinations[i])
+                    }
+                    navigator
+                }
+            )
+        }
+    }
 }
