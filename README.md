@@ -15,7 +15,7 @@ allprojects {
 Add Taxi dependency to app build.gradle
 ```kotlin
 dependencies {
-    implementation("com.github.X1nto:Taxi:1.0.0")
+    implementation("com.github.X1nto:Taxi:1.2.0")
 }
 ```
 
@@ -109,7 +109,24 @@ fun NavbarApp() {
 }
 ```
 
-See the [sample app](/app) for better examples.
+## Usage with Addresses
+Taxi addresses simplify your code by providing a neat DSL for registering new destinations.
+```kt
+AddressedTaxi(
+    modifier = Modifier.fillMaxSize().padding(paddingValues),
+    navigator = navigator,
+    transitionSpec = { fadeIn() with fadeOut() }
+) {
+    address<AppDestination.Home> {
+        Home()
+    }
+    address<AppDestination.Counter> {
+        Counter(it.count)
+    }
+}
+```
+
+Check out the [sample app](/app) for better examples.
 
 License
 -------

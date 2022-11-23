@@ -1,13 +1,10 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    `maven-publish`
 }
 
-group = "com.github.xinto"
-version = "1.1.0"
-
 android {
+    namespace = "com.xinto.taxi"
     compileSdk = 33
 
     defaultConfig {
@@ -26,7 +23,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0"
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
 
     kotlinOptions {
@@ -37,21 +34,8 @@ android {
     }
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components.getByName("release"))
-                groupId = project.group as String
-                artifactId = "taxi"
-                version = project.version as String
-            }
-        }
-    }
-}
-
 dependencies {
-    implementation("androidx.compose.foundation:foundation:1.2.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+    implementation(Dependencies.Compose.foundation)
+    implementation(Dependencies.Lifecycle.viewmodelKtx)
+    implementation(Dependencies.Lifecycle.viewmodelCompose)
 }

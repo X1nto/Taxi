@@ -14,4 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Taxi"
 include(":app")
-include(":lib")
+include(":taxi")
+include(":taxi-addresses")

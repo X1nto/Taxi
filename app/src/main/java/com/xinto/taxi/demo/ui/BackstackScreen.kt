@@ -21,6 +21,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.xinto.taxi.Taxi
 import com.xinto.taxi.demo.ui.viewmodel.BackstackViewModel
 import com.xinto.taxi.rememberBackstackNavigator
+import com.xinto.taxiaddresses.AddressedTaxi
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
@@ -82,7 +83,7 @@ fun BackstackScreen() {
             )
         }
     ) { paddingValues ->
-        Taxi(
+        AddressedTaxi(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
@@ -111,31 +112,25 @@ fun BackstackScreen() {
                 }
             }
         ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                when (it) {
-                    is BackstackDestination.Count -> {
-                        val viewModel: BackstackViewModel = viewModel(factory = viewModelFactory {
-                            initializer { BackstackViewModel(it.index) }
-                        })
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(text = "Screen ${it.index}")
-                            Text(text = "hash: ${viewModel.hashedId}")
-                        }
-                    }
-                    is BackstackDestination.Replaced -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(text = "Hello this is a replaced screen")
-                        }
-                    }
+            address<BackstackDestination.Count> {
+                val viewModel: BackstackViewModel = viewModel(factory = viewModelFactory {
+                    initializer { BackstackViewModel(it.index) }
+                })
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "Screen ${it.index}")
+                    Text(text = "hash: ${viewModel.hashedId}")
+                }
+            }
+            address<BackstackDestination.Replaced> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = "Hello this is a replaced screen")
                 }
             }
         }

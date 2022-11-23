@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace = "com.xinto.taxi.demo"
     compileSdk = 33
 
     defaultConfig {
@@ -33,7 +34,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0"
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
 
     packagingOptions {
@@ -44,12 +45,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":lib"))
-
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha16")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
+    implementation(project(":taxi"))
+    implementation(project(":taxi-addresses"))
+    implementation(Dependencies.Core.coreKtx)
+    implementation(Dependencies.Compose.foundation)
+    implementation(Dependencies.Compose.material3)
+    implementation(Dependencies.Lifecycle.viewmodelCompose)
+    implementation(Dependencies.Lifecycle.viewmodelKtx)
+    implementation(Dependencies.Activity.activityCompose)
 }
