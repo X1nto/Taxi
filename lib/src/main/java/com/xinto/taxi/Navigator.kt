@@ -16,7 +16,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
  * for stack-based navigation.
  */
 @Composable
-public inline fun <reified T : Destination> rememberNavigator(
+public fun <T : Destination> rememberNavigator(
     initial: T
 ): RegularNavigator<T> {
     return rememberSaveable(
@@ -34,7 +34,7 @@ public inline fun <reified T : Destination> rememberNavigator(
  * saving all destinations in a [SnapshotStateList].
  */
 @Composable
-public inline fun <reified T : Destination> rememberBackstackNavigator(
+public fun <T : Destination> rememberBackstackNavigator(
     initial: T
 ): BackstackNavigator<T> {
     return rememberSaveable(
@@ -46,14 +46,20 @@ public inline fun <reified T : Destination> rememberBackstackNavigator(
 
 public interface Navigator<T : Destination> {
     public val currentDestination: T
+
+    public fun shouldRemoveStoreOwner(): Boolean
 }
 
-public class RegularNavigator<T : Destination>(initial: T) : Navigator<T> {
+public class RegularNavigator<T : Destination> internal constructor(initial: T) : Navigator<T> {
 
     private val item = mutableStateOf(initial)
 
     override val currentDestination: T
         get() = item.value
+
+    override fun shouldRemoveStoreOwner(): Boolean {
+        return true
+    }
 
     /**
      * Replace the current [destination] with a new one, completely
@@ -77,9 +83,10 @@ public class RegularNavigator<T : Destination>(initial: T) : Navigator<T> {
     }
 }
 
-public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
+public class BackstackNavigator<T : Destination> internal constructor(initial: T) : Navigator<T> {
 
     private val items = mutableStateListOf(initial)
+    private var shouldRemoveStoreOwners = false
 
     public override val currentDestination: T
         get() = items.last()
@@ -89,6 +96,7 @@ public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
      */
     public fun push(destination: T) {
         items.add(destination)
+        shouldRemoveStoreOwners = false
     }
 
     /**
@@ -101,7 +109,13 @@ public class BackstackNavigator<T : Destination>(initial: T) : Navigator<T> {
             return false
         }
 
-        return items.removeLastOrNull() != null
+        shouldRemoveStoreOwners = true
+        items.removeLast()
+        return true
+    }
+
+    override fun shouldRemoveStoreOwner(): Boolean {
+        return shouldRemoveStoreOwners
     }
 
     /**

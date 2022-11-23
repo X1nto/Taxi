@@ -3,11 +3,16 @@ package com.xinto.taxi
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveableStateHolder
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.SaveableStateHolder
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 /**
  * A navigator composable responsible for displaying the current destination.
@@ -31,15 +36,29 @@ public fun <T : Destination> Taxi(
     modifier: Modifier = Modifier,
     content: @Composable (T) -> Unit,
 ) {
+    val viewModel: NavigatorViewModel = viewModel()
     val saveableStateHolder = rememberSaveableStateHolder()
-    AnimatedContent(
+    val transition = updateTransition(targetState = navigator.currentDestination, label = "")
+    LaunchedEffect(transition.isRunning) {
+        if (navigator.shouldRemoveStoreOwner()) {
+            if (transition.isRunning) {
+                viewModel.scheduleForRemoval(transition.currentState)
+            } else {
+                viewModel.removeScheduled()
+            }
+        }
+    }
+    transition.AnimatedContent(
         modifier = modifier,
-        targetState = navigator.currentDestination,
         transitionSpec = transitionSpec,
         contentAlignment = Alignment.Center
     ) { currentDestination ->
-        saveableStateHolder.SaveableStateProvider(currentDestination) {
-            content(currentDestination)
+        CompositionLocalProvider(
+            LocalViewModelStoreOwner provides viewModel.getViewModelStoreForDestination(currentDestination)
+        ) {
+            saveableStateHolder.SaveableStateProvider(currentDestination) {
+                content(currentDestination)
+            }
         }
     }
 }

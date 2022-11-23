@@ -15,7 +15,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.xinto.taxi.Taxi
+import com.xinto.taxi.demo.ui.viewmodel.BackstackViewModel
 import com.xinto.taxi.rememberBackstackNavigator
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
@@ -29,7 +33,6 @@ fun BackstackScreen() {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 FloatingActionButton(onClick = {
                     navigator.replace(BackstackDestination.Replaced)
-                    currentIndex--
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.Refresh,
@@ -110,14 +113,28 @@ fun BackstackScreen() {
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
             ) {
                 when (it) {
                     is BackstackDestination.Count -> {
-                        Text(text = "Screen ${it.index}")
+                        val viewModel: BackstackViewModel = viewModel(factory = viewModelFactory {
+                            initializer { BackstackViewModel(it.index) }
+                        })
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(text = "Screen ${it.index}")
+                            Text(text = "hash: ${viewModel.hashedId}")
+                        }
                     }
                     is BackstackDestination.Replaced -> {
-                        Text(text = "Hello this is a replaced screen")
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = "Hello this is a replaced screen")
+                        }
                     }
                 }
             }

@@ -52,4 +52,6 @@ afterEvaluate {
 
 dependencies {
     implementation("androidx.compose.foundation:foundation:1.2.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
 }
