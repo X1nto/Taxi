@@ -11,7 +11,7 @@ tasks.register<Delete>("clean") {
 
 allprojects {
     group = "com.github.xinto"
-    version = "1.2.0"
+    version = "1.3.0"
 
     afterEvaluate {
         if (plugins.hasPlugin("com.android.library")) {
