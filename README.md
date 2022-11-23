@@ -15,7 +15,7 @@ allprojects {
 Add Taxi dependency to app build.gradle
 ```kotlin
 dependencies {
-    implementation("com.github.X1nto:Taxi:1.2.0")
+    implementation("com.github.X1nto:Taxi:1.3.0")
 }
 ```
 
