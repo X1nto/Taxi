@@ -18,7 +18,8 @@ subprojects {
                     create<MavenPublication>("maven") {
                         from(components["release"])
                         groupId = "com.github.x1nto"
-                        artifactId = name
+                        artifactId = project.name
+                        version = "1.3.0"
                     }
                 }
             }
