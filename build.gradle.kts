@@ -9,10 +9,7 @@ tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
 }
 
-allprojects {
-    group = "com.github.xinto"
-    version = "1.3.0"
-
+subprojects {
     afterEvaluate {
         if (plugins.hasPlugin("com.android.library")) {
             apply(plugin = "maven-publish")
@@ -21,9 +18,8 @@ allprojects {
                     publications {
                         create<MavenPublication>("release") {
                             from(components["release"])
-                            groupId = project.group as String
+                            groupId = "com.github.x1nto"
                             artifactId = name
-                            version = project.version as String
                         }
                     }
                 }
