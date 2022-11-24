@@ -10,17 +10,15 @@ tasks.register<Delete>("clean") {
 }
 
 subprojects {
-    afterEvaluate {
-        if (plugins.hasPlugin("com.android.library")) {
-            apply(plugin = "maven-publish")
-            afterEvaluate {
-                publishing {
-                    publications {
-                        create<MavenPublication>("maven") {
-                            from(components["release"])
-                            groupId = "com.github.x1nto"
-                            artifactId = name
-                        }
+    plugins.withId("com.android.library") {
+        apply(plugin = "maven-publish")
+        afterEvaluate {
+            publishing {
+                publications {
+                    create<MavenPublication>("maven") {
+                        from(components["release"])
+                        groupId = "com.github.x1nto"
+                        artifactId = name
                     }
                 }
             }
