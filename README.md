@@ -15,7 +15,7 @@ allprojects {
 Add Taxi dependency to app build.gradle
 ```kotlin
 dependencies {
-    implementation("com.github.X1nto:Taxi:1.3.0")
+    implementation("com.github.X1nto.taxi:taxi:1.3.0")
 }
 ```
 
@@ -111,6 +111,16 @@ fun NavbarApp() {
 
 ## Usage with Addresses
 Taxi addresses simplify your code by providing a neat DSL for registering new destinations.
+
+Add the addresses dependency to app build.gradle
+```kt
+dependencies {
+    ...
+    implementation("com.github.X1nto.taxi:taxi-addresses:1.3.0")
+}
+```
+
+Now use Taxi with a beautiful DSL:
 ```kt
 AddressedTaxi(
     modifier = Modifier.fillMaxSize().padding(paddingValues),
